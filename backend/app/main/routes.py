@@ -1,9 +1,8 @@
 import requests
 import json
-from app import app
+import app
 from app.main import bp
 from flask import render_template, redirect, url_for, flash, request, jsonify, abort, url_for
-
 
 
 def has_no_empty_params(rule):
@@ -11,8 +10,7 @@ def has_no_empty_params(rule):
     arguments = rule.arguments if rule.arguments is not None else ()
     return len(defaults) >= len(arguments)
 
-
-@app.route("/")
+@bp.route("/")
 def site_map():
     links = []
     for rule in app.url_map.iter_rules():
