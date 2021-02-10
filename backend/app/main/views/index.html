@@ -1,0 +1,11 @@
+<h1>Current Application Links</h1>
+
+{% for row in data %}
+{{current_map}}
+<ul>
+    <li>
+        <a href="{{row.url}}">{{row.endpoint}}</a>
+    </li>
+</ul>
+
+{% endfor %}

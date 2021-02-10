@@ -1,8 +1,7 @@
 import requests
 import json
-import app
 from app.main import bp
-from flask import render_template, redirect, url_for, flash, request, jsonify, abort, url_for
+from flask import render_template, redirect, url_for, flash, request, jsonify, abort, url_for, current_app
 
 
 def has_no_empty_params(rule):
@@ -13,11 +12,13 @@ def has_no_empty_params(rule):
 @bp.route("/")
 def site_map():
     links = []
-    for rule in app.url_map.iter_rules():
+    
+    for rule in current_app.url_map.iter_rules():
         # Filter out rules we can't navigate to in a browser
         # and rules that require parameters
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
-            links.append((url, rule.endpoint))
+            if rule.endpoint != 'main.site_map':
+                links.append({'url': url, 'endpoint':rule.endpoint})
     # links is now a list of url, endpoint tuples
-    return jsonify(json.dumps(links))
+    return render_template('index.html', data=links)
