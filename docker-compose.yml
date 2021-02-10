@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  jcapp-api:
+    image: cfdev/jcapp-api:1.0
+    container_name: jcapp-api
+    build: ./backend
+    ports:
+      - "8080:8000"
